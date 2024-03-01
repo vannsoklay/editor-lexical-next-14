@@ -54,7 +54,7 @@ export default function MyEditor() {
       ParagraphNode,
       ListNode,
       ListItemNode,
-      LinkNode,
+      LinkNode
     ],
   };
 
@@ -69,10 +69,8 @@ export default function MyEditor() {
             <Divider className="text-bold" />
             <RichTextPlugin
               contentEditable={
-                <div>
-                  <div ref={onRef}>
-                    <ContentEditable />
-                  </div>
+                <div ref={onRef}>
+                  <ContentEditable />
                 </div>
               }
               placeholder={<Placeholder />}

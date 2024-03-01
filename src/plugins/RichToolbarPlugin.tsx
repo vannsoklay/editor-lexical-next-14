@@ -19,20 +19,26 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownTrigger
+  DropdownTrigger,
 } from "@nextui-org/react";
 
 import {
-  $isParentElementRTL,
-  $wrapNodes,
+  $getSelectionStyleValueForProperty,
   $isAtNodeEnd,
+  $patchStyleText,
+  $wrapNodes,
 } from "@lexical/selection";
 
 import {
   INSERT_TABLE_COMMAND,
   InsertTableCommandPayload,
 } from "@lexical/table";
+
+// import { createCommand } from '@lexical/utils';
+
 import { INSERT_IMAGE_COMMAND, InsertImagePayload } from "./ImagePlugin";
+
+export const TOGGLE_HEADING_COMMAND = createCommand("TOGGLE_HEADING_COMMAND");
 
 import {
   TbAlignLeft,
@@ -51,9 +57,12 @@ import { RiParagraph } from "react-icons/ri";
 import { RxFontBold } from "react-icons/rx";
 
 import {
+  $createParagraphNode,
+  $getNearestNodeFromDOMNode,
   $getSelection,
   $isParagraphNode,
   $isRangeSelection,
+  createCommand,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   ParagraphNode,
@@ -61,7 +70,7 @@ import {
 } from "lexical";
 import { $isRootOrShadowRoot, EditorState, LexicalNode } from "lexical";
 import { $findMatchingParent, $getNearestNodeOfType } from "@lexical/utils";
-import { BLOCK_TYPES, useTool } from "./ToolContext";
+import { BLOCK_TYPES } from "./ToolContext";
 
 import {
   ListNode,
@@ -70,6 +79,7 @@ import {
   REMOVE_LIST_COMMAND,
 } from "@lexical/list";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
+import { $createHeadingNode } from "@lexical/rich-text";
 
 type BlockType = (typeof BLOCK_TYPES)[keyof typeof BLOCK_TYPES];
 
@@ -106,7 +116,6 @@ const blockTypeToBlockName = {
   quote: "Quote",
   ul: "Bulleted List",
 };
-
 
 function getSelectedNode(selection: RangeSelection) {
   const anchor = selection.anchor;
@@ -162,7 +171,6 @@ export default function ToolbarEditor() {
     }
     setBlockType(BLOCK_TYPES.P);
 
-
     setIsBold(selection.hasFormat("bold"));
     setIsItalic(selection.hasFormat("italic"));
     setIsUnderline(selection.hasFormat("underline"));
@@ -175,7 +183,6 @@ export default function ToolbarEditor() {
     } else {
       setIsLink(false);
     }
-
   }, []);
 
   useEffect(() => {
@@ -290,8 +297,45 @@ export default function ToolbarEditor() {
             selectionMode="single"
             selectedKeys={selectedKeys}
             onSelectionChange={setSelectedKeys}
-            onChange={() => {
-              console.log("e");
+            onAction={(value) => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if (value == 0) {
+                  if ($isRangeSelection(selection)) {
+                    $wrapNodes(selection, () => $createParagraphNode());
+                  }
+                }
+                if (value == 1) {
+                  if ($isRangeSelection(selection)) {
+                    $wrapNodes(selection, () => $createHeadingNode("h1"));
+                  }
+                }
+                if (value == 2) {
+                  if ($isRangeSelection(selection)) {
+                    $wrapNodes(selection, () => $createHeadingNode("h2"));
+                  }
+                }
+                if (value == 3) {
+                  if ($isRangeSelection(selection)) {
+                    $wrapNodes(selection, () => $createHeadingNode("h3"));
+                  }
+                }
+                if (value == 4) {
+                  if ($isRangeSelection(selection)) {
+                    $wrapNodes(selection, () => $createHeadingNode("h4"));
+                  }
+                }
+                if (value == 5) {
+                  if ($isRangeSelection(selection)) {
+                    $wrapNodes(selection, () => $createHeadingNode("h5"));
+                  }
+                }
+                if (value == 6) {
+                  if ($isRangeSelection(selection)) {
+                    $wrapNodes(selection, () => $createHeadingNode("h6"));
+                  }
+                }
+              });
             }}
           >
             <DropdownItem key="0">Normal</DropdownItem>
@@ -316,6 +360,16 @@ export default function ToolbarEditor() {
             selectionMode="single"
             selectedKeys={selectedKeys}
             onSelectionChange={setSelectedKeys}
+            onAction={(value) => {
+              editor.update(() => {
+                const selection = $getSelection();
+                if ($isRangeSelection(selection)) {
+                  $patchStyleText(selection, {
+                    ["font-size"]: `${value}px`,
+                  });
+                }
+              });
+            }}
           >
             <DropdownItem key="10">10px</DropdownItem>
             <DropdownItem key="12">12px</DropdownItem>

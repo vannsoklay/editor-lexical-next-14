@@ -29,7 +29,14 @@ const ExampleTheme: EditorThemeClasses = {
     superscript: "PlaygroundEditorTheme__textSuperscript",
     underline: "PlaygroundEditorTheme__textUnderline",
     underlineStrikethrough: "PlaygroundEditorTheme__textUnderlineStrikethrough"
-  }
+  },
+  heading: {
+    h1: "editor-heading-h1",
+    h2: "editor-heading-h2",
+    h3: "editor-heading-h3",
+    h4: "editor-heading-h4",
+    h5: "editor-heading-h5"
+  },
 };
 
 export default ExampleTheme;
