@@ -17,6 +17,9 @@ dependencies:
   '@lexical/list':
     specifier: ^0.13.1
     version: 0.13.1(lexical@0.13.1)
+  '@lexical/markdown':
+    specifier: ^0.12.6
+    version: 0.12.6(@lexical/clipboard@0.13.1)(@lexical/selection@0.13.1)(lexical@0.13.1)
   '@lexical/react':
     specifier: ^0.13.1
     version: 0.13.1(lexical@0.13.1)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.12)
@@ -35,6 +38,9 @@ dependencies:
   '@nextui-org/react':
     specifier: ^2.2.9
     version: 2.2.9(@types/react@18.2.58)(framer-motion@11.0.6)(react-dom@18.2.0)(react@18.2.0)(tailwind-variants@0.2.0)(tailwindcss@3.4.1)
+  '@types/react-leaflet':
+    specifier: ^3.0.0
+    version: 3.0.0(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
   LexicalCollaboratorPlugin:
     specifier: link:@lexical/react/LexicalCollaboratorPlugin
     version: link:@lexical/react/LexicalCollaboratorPlugin
@@ -44,6 +50,12 @@ dependencies:
   framer-motion:
     specifier: ^11.0.6
     version: 11.0.6(react-dom@18.2.0)(react@18.2.0)
+  leaflet:
+    specifier: ^1.9.4
+    version: 1.9.4
+  leaflet-defaulticon-compatibility:
+    specifier: ^0.1.2
+    version: 0.1.2
   lexical:
     specifier: ^0.13.1
     version: 0.13.1
@@ -59,6 +71,9 @@ dependencies:
   react-icons:
     specifier: ^5.0.1
     version: 5.0.1(react@18.2.0)
+  react-leaflet:
+    specifier: ^4.2.1
+    version: 4.2.1(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
 
 devDependencies:
   '@types/node':
@@ -284,6 +299,16 @@ packages:
       lexical: 0.13.1
     dev: false
 
+  /@lexical/code@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-D0IBKLzDFfVqk+3KPlJd2gWIq+h5QOsVn5Atz/Eh2eLRpOakSsZiRjmddsijoLsZbvgo1HObRPQAoeATRPWIzg==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
+      lexical: 0.13.1
+      prismjs: 1.29.0
+    dev: false
+
   /@lexical/code@0.13.1(lexical@0.13.1):
     resolution: {integrity: sha512-QK77r3QgEtJy96ahYXNgpve8EY64BQgBSnPDOuqVrLdl92nPzjqzlsko2OZldlrt7gjXcfl9nqfhZ/CAhStfOg==}
     peerDependencies:
@@ -330,12 +355,30 @@ packages:
       lexical: 0.13.1
     dev: false
 
+  /@lexical/link@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-mrFFWR0EZ9liRUzHZqb2ijUDZqkCM+bNsyYqLh4I1CrJpzQtakyIEJt/GzYz4IHmmsRqwcc2zXUP/4kENjjPlQ==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
+      lexical: 0.13.1
+    dev: false
+
   /@lexical/link@0.13.1(lexical@0.13.1):
     resolution: {integrity: sha512-7E3B2juL2UoMj2n+CiyFZ7tlpsdViAoIE7MpegXwfe/VQ66wFwk/VxGTa/69ng2EoF7E0kh+SldvGQDrWAWb1g==}
     peerDependencies:
       lexical: 0.13.1
     dependencies:
       '@lexical/utils': 0.13.1(lexical@0.13.1)
+      lexical: 0.13.1
+    dev: false
+
+  /@lexical/list@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-9DFe8vpSxZ8NQZ/67ZFNiRptB3XPa7mUl0Rmd5WpbJHJHmiORyngYkYgKOW56T/TCtYcLfkTbctMhsIt8OeIqQ==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
       lexical: 0.13.1
     dev: false
 
@@ -355,6 +398,23 @@ packages:
     dependencies:
       '@lexical/utils': 0.13.1(lexical@0.13.1)
       lexical: 0.13.1
+    dev: false
+
+  /@lexical/markdown@0.12.6(@lexical/clipboard@0.13.1)(@lexical/selection@0.13.1)(lexical@0.13.1):
+    resolution: {integrity: sha512-q1cQ4w6KYxUF1N6nGwJTZwn8szLo0kbr8DzI62samZTxeztA0ByMSZLzvO5LSGhgeDremuWx5oa97s2qJMQZFw==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/code': 0.12.6(lexical@0.13.1)
+      '@lexical/link': 0.12.6(lexical@0.13.1)
+      '@lexical/list': 0.12.6(lexical@0.13.1)
+      '@lexical/rich-text': 0.12.6(@lexical/clipboard@0.13.1)(@lexical/selection@0.13.1)(@lexical/utils@0.12.6)(lexical@0.13.1)
+      '@lexical/text': 0.12.6(lexical@0.13.1)
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
+      lexical: 0.13.1
+    transitivePeerDependencies:
+      - '@lexical/clipboard'
+      - '@lexical/selection'
     dev: false
 
   /@lexical/markdown@0.13.1(@lexical/clipboard@0.13.1)(@lexical/selection@0.13.1)(lexical@0.13.1):
@@ -436,6 +496,20 @@ packages:
       - yjs
     dev: false
 
+  /@lexical/rich-text@0.12.6(@lexical/clipboard@0.13.1)(@lexical/selection@0.13.1)(@lexical/utils@0.12.6)(lexical@0.13.1):
+    resolution: {integrity: sha512-fRZHy2ug6Pq+pJK7trr9phTGaD2ba3If8o36dphOsl27MtUllpz68lcXL6mUonzJhAu4um1e9u7GFR3dLp+cVA==}
+    peerDependencies:
+      '@lexical/clipboard': 0.12.6
+      '@lexical/selection': 0.12.6
+      '@lexical/utils': 0.12.6
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/clipboard': 0.13.1(lexical@0.13.1)
+      '@lexical/selection': 0.13.1(lexical@0.13.1)
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
+      lexical: 0.13.1
+    dev: false
+
   /@lexical/rich-text@0.13.1(@lexical/clipboard@0.13.1)(@lexical/selection@0.13.1)(@lexical/utils@0.13.1)(lexical@0.13.1):
     resolution: {integrity: sha512-HliB9Ync06mv9DBg/5j0lIsTJp+exLHlaLJe+n8Zq1QNTzZzu2LsIT/Crquk50In7K/cjtlaQ/d5RB0LkjMHYg==}
     peerDependencies:
@@ -450,11 +524,28 @@ packages:
       lexical: 0.13.1
     dev: false
 
+  /@lexical/selection@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-HJBEazVwOe6duyHV6+vB/MS4kUBlCV05Cfcigdx8HlLLFQRWPqHrTpaxKz4jfb9ar0SlI2W1BUNbySAxMkC/HQ==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      lexical: 0.13.1
+    dev: false
+
   /@lexical/selection@0.13.1(lexical@0.13.1):
     resolution: {integrity: sha512-Kt9eSwjxPznj7yzIYipu9yYEgmRJhHiq3DNxHRxInYcZJWWNNHum2xKyxwwcN8QYBBzgfPegfM/geqQEJSV1lQ==}
     peerDependencies:
       lexical: 0.13.1
     dependencies:
+      lexical: 0.13.1
+    dev: false
+
+  /@lexical/table@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-rUh9/fN831T6UpNiPuzx0x6HNi/eQ7W5AQrVBwwzEwkbwAqnE0n28DP924AUbX72UsQNHtywgmDApMoEV7W2iQ==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/utils': 0.12.6(lexical@0.13.1)
       lexical: 0.13.1
     dev: false
 
@@ -467,11 +558,30 @@ packages:
       lexical: 0.13.1
     dev: false
 
+  /@lexical/text@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-WfqfH9gvPAx9Hi9wrJDWECdvt6turPQXImCRI657LVfsP2hHh4eHpcSnd3YYH313pv98HPWmeMstBbEieYwTpQ==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      lexical: 0.13.1
+    dev: false
+
   /@lexical/text@0.13.1(lexical@0.13.1):
     resolution: {integrity: sha512-NYy3TZKt3qzReDwN2Rr5RxyFlg84JjXP2JQGMrXSSN7wYe73ysQIU6PqdVrz4iZkP+w34F3pl55dJ24ei3An9w==}
     peerDependencies:
       lexical: 0.13.1
     dependencies:
+      lexical: 0.13.1
+    dev: false
+
+  /@lexical/utils@0.12.6(lexical@0.13.1):
+    resolution: {integrity: sha512-hK5r/TD2nH5TfWSiCxy7/lh0s11qJcI1wo++PBQOR9o937pQ+/Zr/1tMOc8MnrTpl89mtmYtPfWW3f++HH1Yog==}
+    peerDependencies:
+      lexical: 0.12.6
+    dependencies:
+      '@lexical/list': 0.12.6(lexical@0.13.1)
+      '@lexical/selection': 0.12.6(lexical@0.13.1)
+      '@lexical/table': 0.12.6(lexical@0.13.1)
       lexical: 0.13.1
     dev: false
 
@@ -2366,6 +2476,18 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@react-leaflet/core@2.1.0(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Qk7Pfu8BSarKGqILj4x7bCSZ1pjuAPZ+qmRwH5S7mDS91VSbVVsJSrW4qA+GPrro8t69gFYVMWb1Zc4yFmPiVg==}
+    peerDependencies:
+      leaflet: ^1.9.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      leaflet: 1.9.4
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@react-stately/checkbox@3.6.3(react@18.2.0):
     resolution: {integrity: sha512-hWp0GXVbMI4sS2NbBjWgOnHNrRqSV4jeftP8zc5JsIYRmrWBUZitxluB34QuVPzrBO29bGsF0GTArSiQZt6BWw==}
     peerDependencies:
@@ -2846,6 +2968,17 @@ packages:
     dependencies:
       '@types/react': 18.2.58
     dev: true
+
+  /@types/react-leaflet@3.0.0(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-p8R9mVKbCDDqOdW+M6GyJJuFn6q+IgDFYavFiOIvaWHuOe5kIHZEtCy1pfM43JIA6JiB3D/aDoby7C51eO+XSg==}
+    deprecated: This is a stub types definition. react-leaflet provides its own type definitions, so you do not need this installed.
+    dependencies:
+      react-leaflet: 4.2.1(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - leaflet
+      - react
+      - react-dom
+    dev: false
 
   /@types/react@18.2.58:
     resolution: {integrity: sha512-TaGvMNhxvG2Q0K0aYxiKfNDS5m5ZsoIBBbtfUorxdH4NGSXIlYvZxLJI+9Dd3KjeB3780bciLyAb7ylO8pLhPw==}
@@ -4363,6 +4496,14 @@ packages:
       language-subtag-registry: 0.3.22
     dev: true
 
+  /leaflet-defaulticon-compatibility@0.1.2:
+    resolution: {integrity: sha512-IrKagWxkTwzxUkFIumy/Zmo3ksjuAu3zEadtOuJcKzuXaD76Gwvg2Z1mLyx7y52ykOzM8rAH5ChBs4DnfdGa6Q==}
+    dev: false
+
+  /leaflet@1.9.4:
+    resolution: {integrity: sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==}
+    dev: false
+
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -4837,6 +4978,19 @@ packages:
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: true
+
+  /react-leaflet@4.2.1(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-p9chkvhcKrWn/H/1FFeVSqLdReGwn2qmiobOQGO3BifX+/vV/39qhY8dGqbdcPh1e6jxh/QHriLXr7a4eLFK4Q==}
+    peerDependencies:
+      leaflet: ^1.9.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@react-leaflet/core': 2.1.0(leaflet@1.9.4)(react-dom@18.2.0)(react@18.2.0)
+      leaflet: 1.9.4
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /react-remove-scroll-bar@2.3.5(@types/react@18.2.58)(react@18.2.0):
     resolution: {integrity: sha512-3cqjOqg6s0XbOjWvmasmqHch+RLxIEk2r/70rzGXuz3iIGQsQheEQyqYCBb5EECoD01Vo2SIbDqW4paLeLTASw==}

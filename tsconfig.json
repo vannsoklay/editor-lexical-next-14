@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/writer/components/themes/ExampleTheme.js", "src/app/writer/components/Editor.js", "src/app/writer/components/plugins/ToolbarPlugin.js"],
   "exclude": ["node_modules"]
 }

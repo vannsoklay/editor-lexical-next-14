@@ -20,6 +20,14 @@ const ExampleTheme: EditorThemeClasses = {
   tableCellSortedIndicator: "PlaygroundEditorTheme__tableCellSortedIndicator",
   tableResizeRuler: "PlaygroundEditorTheme__tableCellResizeRuler",
   tableSelected: "PlaygroundEditorTheme__tableSelected",
+  list: {
+    nested: {
+      listitem: "PlaygroundEditorTheme__nestedListItem",
+    },
+    ol: "PlaygroundEditorTheme__listOl",
+    ul: "PlaygroundEditorTheme__listUl",
+    listitem: "PlaygroundEditorTheme__listItem",
+  },
   text: {
     bold: "PlaygroundEditorTheme__textBold",
     code: "PlaygroundEditorTheme__textCode",
@@ -28,14 +36,14 @@ const ExampleTheme: EditorThemeClasses = {
     subscript: "PlaygroundEditorTheme__textSubscript",
     superscript: "PlaygroundEditorTheme__textSuperscript",
     underline: "PlaygroundEditorTheme__textUnderline",
-    underlineStrikethrough: "PlaygroundEditorTheme__textUnderlineStrikethrough"
+    underlineStrikethrough: "PlaygroundEditorTheme__textUnderlineStrikethrough",
   },
   heading: {
     h1: "editor-heading-h1",
     h2: "editor-heading-h2",
     h3: "editor-heading-h3",
     h4: "editor-heading-h4",
-    h5: "editor-heading-h5"
+    h5: "editor-heading-h5",
   },
 };
 

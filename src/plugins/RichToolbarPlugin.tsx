@@ -67,21 +67,20 @@ import {
   FORMAT_TEXT_COMMAND,
   ParagraphNode,
   RangeSelection,
+  SELECTION_CHANGE_COMMAND,
 } from "lexical";
 import { $isRootOrShadowRoot, EditorState, LexicalNode } from "lexical";
-import { $findMatchingParent, $getNearestNodeOfType } from "@lexical/utils";
-import { BLOCK_TYPES } from "./ToolContext";
+import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from "@lexical/utils";
 
 import {
   ListNode,
   $isListNode,
   INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
+  INSERT_ORDERED_LIST_COMMAND,
 } from "@lexical/list";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $createHeadingNode } from "@lexical/rich-text";
-
-type BlockType = (typeof BLOCK_TYPES)[keyof typeof BLOCK_TYPES];
 
 const getSecondRootNode = (targetNode: LexicalNode) => {
   return targetNode.getKey() === "root"
@@ -93,16 +92,6 @@ const getSecondRootNode = (targetNode: LexicalNode) => {
 };
 
 const FONT_SIZES = [11, 14, 16, 18, 14, 31];
-
-const supportedBlockTypes = new Set([
-  "paragraph",
-  "quote",
-  "code",
-  "h1",
-  "h2",
-  "ul",
-  "ol",
-]);
 
 const blockTypeToBlockName = {
   code: "Code Block",
@@ -116,6 +105,13 @@ const blockTypeToBlockName = {
   quote: "Quote",
   ul: "Bulleted List",
 };
+
+const BLOCK_TYPES = {
+  ol: "Numbered List",
+  ul: "Bulleted List",
+};
+
+type BlockType = (typeof BLOCK_TYPES)[keyof typeof BLOCK_TYPES];
 
 function getSelectedNode(selection: RangeSelection) {
   const anchor = selection.anchor;
@@ -135,7 +131,7 @@ function getSelectedNode(selection: RangeSelection) {
 
 export default function ToolbarEditor() {
   const [editor] = useLexicalComposerContext();
-  const [blockType, setBlockType] = useState<BlockType>(BLOCK_TYPES.P);
+  const [blockType, setBlockType] = useState<BlockType>(BLOCK_TYPES.ol);
 
   const [selectedFontSize, setSelectedFontSize] = useState<number>(16);
   const toolbarRef = useRef<HTMLDivElement>(null);
@@ -153,6 +149,8 @@ export default function ToolbarEditor() {
   const [isBold, setIsBold] = useState<boolean>(false);
   const [isItalic, setIsItalic] = useState<boolean>(false);
   const [isUnderline, setIsUnderline] = useState<boolean>(false);
+  const [isOl, setIsOl] = useState<boolean>(false);
+  const [isUl, setIsUl] = useState<boolean>(false);
 
   const updateToolCondition = useCallback(() => {
     const selection = $getSelection();
@@ -169,7 +167,7 @@ export default function ToolbarEditor() {
       setBlockType(type);
       return;
     }
-    setBlockType(BLOCK_TYPES.P);
+    setBlockType(BLOCK_TYPES.ol);
 
     setIsBold(selection.hasFormat("bold"));
     setIsItalic(selection.hasFormat("italic"));
@@ -193,22 +191,22 @@ export default function ToolbarEditor() {
     });
   }, [editor, updateToolCondition]);
 
-  const [isUnOrderList, isOrderList, isCheckList] = useMemo(
-    () => [
-      blockType === BLOCK_TYPES.UL,
-      blockType === BLOCK_TYPES.OL,
-      blockType === BLOCK_TYPES.CL,
-    ],
-    [blockType]
-  );
+  // const [isUnOrderList, isOrderList, isCheckList] = useMemo(
+  //   () => [
+  //     blockType === BLOCK_TYPES.UL,
+  //     blockType === BLOCK_TYPES.OL,
+  //     blockType === BLOCK_TYPES.CL,
+  //   ],
+  //   [blockType]
+  // );
 
-  const toggleUnOrderList = useCallback(() => {
-    if (!isUnOrderList) {
-      editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
-      return;
-    }
-    editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
-  }, [editor, isUnOrderList]);
+  // const toggleUnOrderList = useCallback(() => {
+  //   if (!isUnOrderList) {
+  //     editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+  //     return;
+  //   }
+  //   editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+  // }, [editor, isUnOrderList]);
 
   const insertTable = (payload: InsertTableCommandPayload) => {
     editor.dispatchCommand(INSERT_TABLE_COMMAND, payload);
@@ -250,25 +248,12 @@ export default function ToolbarEditor() {
   const handleUpload = () => {
     insertImage({
       altText: "URL image",
-      src: "https://media-be.chewy.com/wp-content/uploads/1014/01/10161406/husky-behavior-problems-escaping-1014x615.jpg",
+      src: "https://cdn.britannica.com/84/232784-050-1769B477/Siberian-Husky-dog.jpg",
     });
   };
 
-  // const applyFontSize = (fontSize: number) => {
-  //   editor.update(() => {
-  //     const selection = $getSelection();
-  //     if (selection !== null && $isRangeSelection(selection)) {
-  //       selection.getNodes().forEach((node) => {
-  //         if (node instanceof ParagraphNode) {
-  //           // node.setFormat('font-size', `${fontSize}px`);
-  //         }
-  //       });
-  //     }
-  //   });
-  //   setSelectedFontSize(fontSize);
-  // };
-
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set(["10"]));
+  const [fontSize, setFontSize] = React.useState<any>(new Set(["10"]));
 
   const selectedValue = React.useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
@@ -277,7 +262,7 @@ export default function ToolbarEditor() {
 
   return (
     <div className="flex space-x-4" ref={toolbarRef}>
-      <div className="pr-1">
+      <div className="pr-1 flex items-center">
         <Dropdown>
           <DropdownTrigger>
             <Button
@@ -350,16 +335,16 @@ export default function ToolbarEditor() {
 
         <Dropdown>
           <DropdownTrigger>
-            <Button variant="bordered" className="capitalize">
-              {selectedValue}px
+            <Button variant="flat" size="sm" className="capitalize">
+              {fontSize}px
             </Button>
           </DropdownTrigger>
           <DropdownMenu
             aria-label="font-size"
             disallowEmptySelection
             selectionMode="single"
-            selectedKeys={selectedKeys}
-            onSelectionChange={setSelectedKeys}
+            selectedKeys={fontSize}
+            onSelectionChange={setFontSize}
             onAction={(value) => {
               editor.update(() => {
                 const selection = $getSelection();
@@ -478,11 +463,18 @@ export default function ToolbarEditor() {
           isIconOnly
           aria-label="order-list"
           className="bg-white"
-          onClick={() => {
-            // editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+          onClick={(e) => {
+            e.preventDefault();
+            if(!isUl){
+              editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+              setIsUl(true)
+              return
+            }
+            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+            setIsUl(false)  
           }}
         >
-          <TbListNumbers fontSize={18} />
+          <TbListLetters fontSize={18} />
         </Button>
       </div>
 
@@ -491,11 +483,19 @@ export default function ToolbarEditor() {
           isIconOnly
           aria-label="order-list"
           className="bg-white"
-          onClick={() => {
-            // editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+          onClick={(e) => {
+            e.preventDefault();
+            if(!isOl){
+              editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+              setIsOl(true)
+              return
+            }
+            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+            setIsOl(false) 
+            
           }}
         >
-          <TbListLetters fontSize={18} />
+          <TbListNumbers fontSize={18} />
         </Button>
       </div>
       <div className="flex items-center">
@@ -507,7 +507,8 @@ export default function ToolbarEditor() {
           aria-label="order-list"
           className="bg-white"
           onClick={() => {
-            // editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
+            // e.preventDefault();
+            
           }}
         >
           <TbLink fontSize={18} />

@@ -54,23 +54,23 @@ export default function MyEditor() {
       ParagraphNode,
       ListNode,
       ListItemNode,
-      LinkNode
+      LinkNode,
     ],
   };
 
   return (
     <Card shadow="sm" radius="md" className="p-0">
       <LexicalComposer initialConfig={editorConfig}>
-        <TableContext>
-          <div>
-            <div className="w-full h-14 px-3 flex items-center">
+        <div className="relative border-none pb-6">
+          <TableContext>
+            <div className="w-full h-14 px-1 flex items-center">
               <ToolbarEditor />
             </div>
             <Divider className="text-bold" />
             <RichTextPlugin
               contentEditable={
                 <div ref={onRef}>
-                  <ContentEditable />
+                  <ContentEditable className="relative min-h-40 outline-none" />
                 </div>
               }
               placeholder={<Placeholder />}
@@ -89,13 +89,17 @@ export default function MyEditor() {
                 <TableCellActionMenuPlugin anchorElem={floatingAnchorElem} />
               </>
             )}
-          </div>
-        </TableContext>
+          </TableContext>
+        </div>
       </LexicalComposer>
     </Card>
   );
 }
 
 function Placeholder() {
-  return <div>Play around with the table plugin...</div>;
+  return (
+    <div className="absolute top-16 left-3.5 ml-1.5 select-none painter-none inline-block overflow-hidden">
+      Play around with the table plugin...
+    </div>
+  );
 }
